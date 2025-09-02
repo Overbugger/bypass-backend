@@ -5,6 +5,7 @@ import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 @Entity
@@ -24,6 +25,20 @@ public class Ticket extends BaseEntity {
     @Column(name = "status", nullable = false)
     @Enumerated(EnumType.STRING)
     private TicketStatusEnum status;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        Ticket ticket = (Ticket) o;
+        return Objects.equals(id, ticket.id) && status == ticket.status;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), id, status);
+    }
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ticket_type_id")

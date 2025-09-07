@@ -10,7 +10,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 @Entity
-@Table(name = "name")
+@Table(name = "events")
 @Getter
 @Setter
 @AllArgsConstructor
@@ -25,10 +25,10 @@ public class Event extends BaseEntity {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "start")
+    @Column(name = "event_start")
     private LocalDateTime start;
 
-    @Column(name = "end", nullable = false)
+    @Column(name = "event_end", nullable = false)
     private LocalDateTime end;
 
     @Column(name = "venue", nullable = false)

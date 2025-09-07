@@ -1,6 +1,6 @@
 package com.api.bypass.repositories;
 
-import com.api.bypass.domain.User;
+import com.api.bypass.domain.entities.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,4 +1,4 @@
-package com.api.bypass.domain;
+package com.api.bypass.domain.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -7,17 +7,15 @@ import java.util.Objects;
 import java.util.UUID;
 
 @Entity
-@Table(name = "qr_codes")
+@Table(name = "ticket_validation")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class QrCode extends BaseEntity {
-
+public class TicketValidation extends BaseEntity {
     @Id
     @Column(name = "id", nullable = false, updatable = false)
-    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
     @Override
@@ -25,21 +23,22 @@ public class QrCode extends BaseEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
-        QrCode qrCode = (QrCode) o;
-        return Objects.equals(id, qrCode.id) && status == qrCode.status && Objects.equals(value, qrCode.value);
+        TicketValidation that = (TicketValidation) o;
+        return Objects.equals(id, that.id) && status == that.status;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), id, status, value);
+        return Objects.hash(super.hashCode(), id, status);
     }
 
     @Column(name = "status", nullable = false)
     @Enumerated(EnumType.STRING)
-    private QrCodeStatusEnum status;
+    private TicketValidationStatusEnum status;
 
-    @Column(name = "value", nullable = false)
-    private String value;
+    @Column(name = "validation_method", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private TicketValidationMethod validationMethod;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ticket_id")

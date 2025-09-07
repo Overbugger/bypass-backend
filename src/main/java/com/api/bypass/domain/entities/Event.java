@@ -1,4 +1,4 @@
-package com.api.bypass.domain;
+package com.api.bypass.domain.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -43,6 +43,15 @@ public class Event extends BaseEntity {
     @Column(name = "status", nullable = false)
     @Enumerated(EnumType.STRING)
     private EventStatusEnum status;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "organizer_id")
+    private User organizer;
+    @ManyToMany(mappedBy = "attendingEvents")
+    private List<User> attendees = new ArrayList<>();
+    @ManyToMany(mappedBy = "staffingEvents")
+    private List<User> staff = new ArrayList<>();
+    @OneToMany(mappedBy = "event", cascade = CascadeType.ALL)
+    private List<TicketType> ticketTypes = new ArrayList<>();
 
     @Override
     public boolean equals(Object o) {
@@ -57,17 +66,4 @@ public class Event extends BaseEntity {
     public int hashCode() {
         return Objects.hash(super.hashCode(), id, name, start, end, venue, salesStart, salesEnd, status);
     }
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "organizer_id")
-    private User organizer;
-
-    @ManyToMany(mappedBy = "attendingEvents")
-    private List<User> attendees = new ArrayList<>();
-
-    @ManyToMany(mappedBy = "staffingEvents")
-    private List<User> staff = new ArrayList<>();
-
-    @OneToMany(mappedBy = "event", cascade = CascadeType.ALL)
-    private List<TicketType> ticketTypes = new ArrayList<>();
 }

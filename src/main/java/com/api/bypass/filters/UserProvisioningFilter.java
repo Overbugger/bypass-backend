@@ -1,6 +1,6 @@
 package com.api.bypass.filters;
 
-import com.api.bypass.domain.User;
+import com.api.bypass.domain.entities.User;
 import com.api.bypass.repositories.UserRepository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

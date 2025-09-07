@@ -1,4 +1,4 @@
-package com.api.bypass.domain;
+package com.api.bypass.domain.entities;
 
 import jakarta.persistence.*;
 import lombok.*;

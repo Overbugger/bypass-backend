@@ -1,6 +1,6 @@
 package com.api.bypass.exceptions;
 
-public class UserNotFoundException extends EventTicketExceptoion{
+public class UserNotFoundException extends EventTicketException {
     public UserNotFoundException() {
     }
 

@@ -15,12 +15,12 @@ Authorization: Bearer {{ access_token}}
     {
       "name": "Regular",
       "price": 50.00,
-      "quantity": 200
+      "totalAvailable": 200
     },
     {
       "name": "VIP",
       "price": 150.00,
-      "quantity": 50
+      "totalAvailable": 50
     }
   ]
 }

@@ -3,6 +3,7 @@ package com.api.bypass.controllers;
 import com.api.bypass.domain.CreateEventRequest;
 import com.api.bypass.domain.dtos.CreateEventRequestDto;
 import com.api.bypass.domain.dtos.CreateEventResponseDto;
+import com.api.bypass.domain.dtos.GetEventDetailsResponseDto;
 import com.api.bypass.domain.dtos.ListEventResponseDto;
 import com.api.bypass.domain.entities.Event;
 import com.api.bypass.mappers.EventMapper;
@@ -33,7 +34,7 @@ public class EventController {
             @Valid @RequestBody CreateEventRequestDto createEventRequestDto) {
         CreateEventRequest createEventRequest = eventMapper.fromDto(createEventRequestDto);
 
-       UUID userId = parseUserId(jwt);
+        UUID userId = parseUserId(jwt);
 
         Event createdEvent = eventService.createEvent(userId, createEventRequest);
 
@@ -53,6 +54,18 @@ public class EventController {
         return ResponseEntity.ok(
                 events.map(eventMapper::toListEventResponseDto)
         );
+    }
+
+    @GetMapping(path = "/{eventId}")
+    public ResponseEntity<GetEventDetailsResponseDto> getEvent(
+            @AuthenticationPrincipal Jwt jwt,
+            @PathVariable UUID eventId
+    ) {
+        UUID userId = parseUserId(jwt);
+        return eventService.getEventForOrganizer(userId, eventId)
+                .map(eventMapper::toGetEventDetailsResponseDto)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
     private UUID parseUserId(Jwt jwt) {

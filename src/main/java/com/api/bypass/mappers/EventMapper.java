@@ -2,6 +2,8 @@ package com.api.bypass.mappers;
 
 import com.api.bypass.domain.CreateEventRequest;
 import com.api.bypass.domain.CreateTicketTypeRequest;
+import com.api.bypass.domain.UpdateEventRequest;
+import com.api.bypass.domain.UpdateTicketTypeRequest;
 import com.api.bypass.domain.dtos.*;
 import com.api.bypass.domain.entities.Event;
 import com.api.bypass.domain.entities.TicketType;
@@ -17,4 +19,8 @@ public interface EventMapper {
     ListEventResponseDto toListEventResponseDto(Event event);
     GetEventDetailsTicketTypesResponseDto toGetEventDetailsTicketTypesResponseDto(TicketType ticketType);
     GetEventDetailsResponseDto toGetEventDetailsResponseDto(Event event);
+    UpdateTicketTypeRequest fromDto(UpdateTicketTypeRequestDto dto);
+    UpdateEventRequest fromDto(UpdateEventRequestDto dto);
+    UpdateTicketTypeResponseDto toUpdateTicketTypeResponseDto (TicketType ticketType);
+    UpdateEventResponseDto toUpdateEventResponseDto (Event event);
 }

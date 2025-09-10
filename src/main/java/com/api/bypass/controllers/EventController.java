@@ -1,10 +1,8 @@
 package com.api.bypass.controllers;
 
 import com.api.bypass.domain.CreateEventRequest;
-import com.api.bypass.domain.dtos.CreateEventRequestDto;
-import com.api.bypass.domain.dtos.CreateEventResponseDto;
-import com.api.bypass.domain.dtos.GetEventDetailsResponseDto;
-import com.api.bypass.domain.dtos.ListEventResponseDto;
+import com.api.bypass.domain.UpdateEventRequest;
+import com.api.bypass.domain.dtos.*;
 import com.api.bypass.domain.entities.Event;
 import com.api.bypass.mappers.EventMapper;
 import com.api.bypass.services.EventService;
@@ -41,6 +39,22 @@ public class EventController {
         CreateEventResponseDto createEventResponseDto = eventMapper.toDto(createdEvent);
 
         return new ResponseEntity<>(createEventResponseDto, HttpStatus.CREATED);
+    }
+
+    @PutMapping(path = "/{eventId}")
+    public ResponseEntity<UpdateEventResponseDto> updateEvent(
+            @AuthenticationPrincipal Jwt jwt,
+            @PathVariable UUID eventId,
+            @Valid @RequestBody UpdateEventRequestDto updateEventRequestDto) {
+       UpdateEventRequest updateEventRequest = eventMapper.fromDto(updateEventRequestDto);
+
+        UUID userId = parseUserId(jwt);
+
+        Event updatedEvent = eventService.updateEventForOrganizer(userId, eventId, updateEventRequest);
+
+        UpdateEventResponseDto updateEventResponseDto = eventMapper.toUpdateEventResponseDto(updatedEvent);
+
+        return ResponseEntity.ok(updateEventResponseDto);
     }
 
     @GetMapping
